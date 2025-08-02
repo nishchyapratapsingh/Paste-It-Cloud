@@ -4,7 +4,13 @@ const User = require("../models/User");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-require('dotenv').config();
+const fetchuser = require("../middlewares/fetchuser");
+require("dotenv").config();
+
+if (!process.env.JWT_SECRET) {
+  console.error("FATAL ERROR: JWT_SECRET is not defined.");
+  process.exit(1);
+}
 
 router.post(
   "/createuser",
@@ -13,8 +19,7 @@ router.post(
   check("password").isLength({ min: 5 }),
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty())
-      return res.status(400).json({ errors: errors.array() }); //returns validation errors
+    if (!errors.isEmpty()) return res.status(400).json({ errors }); //returns validation errors
 
     try {
       let user = await User.findOne({ email: req.body.email }); //duplicate email check
@@ -29,7 +34,13 @@ router.post(
         password: hashedPassword,
       });
       await user.save();
-      res.status(201).json({ success: "User created", user: user.name });
+      const payload = {
+        userId: user._id,
+      };
+      const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: "1h",
+      });
+      res.status(201).json({ token });
     } catch (error) {
       //catches errors to prevent crashes
       res.status(500).json({ error: "Internal server error" });
@@ -57,7 +68,7 @@ router.post(
         return res.status(400).json({ error: "Invalid email or password" });
 
       const payload = {
-        email: user.email,
+        userId: user._id,
       };
       const token = jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: "1h",
@@ -65,11 +76,22 @@ router.post(
 
       res.json({ token });
     } catch (error) {
-      console.error(error);
       res.status(500).json({ error: "Internal server error" });
     }
   }
 );
 
+router.post("/getuser", fetchuser, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const user = await User.findById(userId).select("-password");
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = router;
- 
