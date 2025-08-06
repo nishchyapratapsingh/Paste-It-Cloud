@@ -60,7 +60,24 @@ router.put(  //put req for updation
   }
 );
 
-
-
+router.delete(  
+  "/deletenote/:id",
+  fetchuser,
+  async (req, res) => {
+    try {
+      let note = await Notes.findById(req.params.id);
+      if (!note) {
+        return res.status(404).send("Not Found");
+      }
+      if ((note.user.toString()) != req.userId) {
+        return res.status(401).send("Not Found");
+      }
+      await note.deleteOne();
+      res.status(200).json({ success: "note deleted"});
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
 
 module.exports = router;
