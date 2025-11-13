@@ -4,7 +4,7 @@ import { Link, useLocation} from "react-router-dom";
 export default function Navbar() {
   let location = useLocation();
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary`">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           Navbar
