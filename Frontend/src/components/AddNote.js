@@ -1,28 +1,71 @@
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { useContext, useState } from "react";
+import noteContext from "../context/notes/noteContext";
 
 function AddNote() {
-  return (
-    <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
-        <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
+  const context = useContext(noteContext);
+  const {addNote} = context;
+  const [note, setNote] = useState({title: "", description: "", tag: ""})
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
+  const handleSave = (e)=> {
+    e.preventDefault();
+    addNote(note.title, note.description, note.tag);
+  }
+  const handleChange = (e)=> {
+    setNote({...note, [e.target.name]: e.target.value})
+  }
+  return (
+    <form>
+      <div className="mb-3">
+        <label htmlFor="noteTitleForm" className="form-label">
+          Note title
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="noteTitleForm"
+          name="title"
+          onChange={handleChange}
+        />
+        
+      </div>
+      <div className="mb-3">
+        <label htmlFor="noteDescForm" className="form-label">
+          Description
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="noteDescForm"
+          name="description"
+          onChange={handleChange}
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="noteTagForm" className="form-label">
+          Tag
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="noteTagForm"
+          name="tag"
+          onChange={handleChange}
+        />
+      </div>
+      {/* <div className="mb-3 form-check">
+        <input
+          type="checkbox"
+          className="form-check-input"
+          id="exampleCheck1"
+        />
+        <label className="form-check-label" htmlFor="exampleCheck1">
+          Check me out
+        </label>
+      </div> */}
+      <button type="submit" className="btn btn-primary" onClick={handleSave}>
+        Add Note
+      </button>
+    </form>
   );
 }
 

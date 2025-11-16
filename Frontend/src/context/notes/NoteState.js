@@ -1,86 +1,127 @@
 import { useState } from "react";
 import noteContext from "./noteContext";
-const notesInitial = [
-    {
-        "_id": "688f68a4448afe4127af9cbd",
-        "user": "688f60c1566c0e82e6273129",
-        "title": "Hello World",
-        "description": "This is my first note",
-        "tags": "general",
-        "date": "2025-08-03T13:48:20.477Z",
-        "__v": 0
-    },
-    {
-        "_id": "688f9cd40154dcd24b2b0edd",
-        "user": "688f60c1566c0e82e6273129",
-        "title": "Sleep habits",
-        "description": "I should sleep 7-8 hours daily",
-        "tags": "general",
-        "date": "2025-08-03T17:31:00.647Z",
-        "__v": 0
-    },
-    {
-        "_id": "688f9ce7236cca277fe1df6c",
-        "user": "688f60c1566c0e82e6273129",
-        "title": "Sleep habits",
-        "description": "I should sleep 7-8 hours daily",
-        "tags": "general",
-        "date": "2025-08-03T17:31:19.785Z",
-        "__v": 0
-    },
-    {
-        "_id": "688f9d0bd66c6c08de97132b",
-        "user": "688f60c1566c0e82e6273129",
-        "title": "Sleep habits",
-        "description": "I should sleep 7-8 hours daily",
-        "tags": "general",
-        "date": "2025-08-03T17:31:55.541Z",
-        "__v": 0
-    },
-    {
-        "_id": "688f9d0ed66c6c08de97132d",
-        "user": "688f60c1566c0e82e6273129",
-        "title": "Sleep habits",
-        "description": "I should sleep 7-8 hours daily",
-        "tags": "general",
-        "date": "2025-08-03T17:31:58.665Z",
-        "__v": 0
-    },
-    {
-        "_id": "688f9d218eb1f1fe49ef4c8d",
-        "user": "688f60c1566c0e82e6273129",
-        "title": "Sleep habits",
-        "description": "I should sleep 7-8 hours daily",
-        "tags": "general",
-        "date": "2025-08-03T17:32:17.650Z",
-        "__v": 0
-    },
-    {
-        "_id": "688f9d2d8eb1f1fe49ef4c8f",
-        "user": "688f60c1566c0e82e6273129",
-        "title": "Sleep habits 2",
-        "description": "I should sleep 7-8 hours daily",
-        "tags": "general",
-        "date": "2025-08-03T17:32:29.829Z",
-        "__v": 0
-    },
-    {
-        "_id": "68ba928f7a8120023495ed6f",
-        "user": "688f60c1566c0e82e6273129",
-        "title": "Teacher's Day",
-        "description": "New Note today",
-        "tags": "general",
-        "date": "2025-09-05T07:34:39.055Z",
-        "__v": 0
-    }
-]
-
+const notesInitial = [];
 const NoteState = (props) => {
-    const [notes, setNotes] = useState(notesInitial)
-    return(
-        <noteContext.Provider value={{notes, setNotes}}>
-            {props.children}
-        </noteContext.Provider>
-    )
-}
+  const HOST = "http://localhost:5000";
+  const [notes, setNotes] = useState(notesInitial);
+  const getNotes = async () => {
+    const url = `${HOST}/api/notes/fetchallnotes`;
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token":
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmNjBjMTU2NmMwZTgyZTYyNzMxMjkiLCJpYXQiOjE3NjMzMTUyODUsImV4cCI6MTc2MzMxODg4NX0.wmSbOthciXKVmKbxGFIXrXxr_WeBGSq-dCGU9jkRfXM",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+  const addNote = async (title, desc, tag) => {
+    const url = `${HOST}/api/notes/createnote`;
+    const data = { title, description: desc, tags: tag };
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token":
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmNjBjMTU2NmMwZTgyZTYyNzMxMjkiLCJpYXQiOjE3NjMzMTUyODUsImV4cCI6MTc2MzMxODg4NX0.wmSbOthciXKVmKbxGFIXrXxr_WeBGSq-dCGU9jkRfXM",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error(error.message);
+    }
+    // const note = {
+    //   _id: "68ba928f7a8120023495e5d6f",
+    //   user: "688f60c1566c0e82e6273129",
+    //   title: title,
+    //   description: desc,
+    //   tags: tag,
+    //   date: "2025-09-05T07:34:39.055Z",
+    //   __v: 0,
+    // };
+    // setNotes(notes.concat(note));
+  };
+  const deleteNote = async(id) => {
+    const url = `${HOST}/api/notes/deletenote/${id}`;
+    try {
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmNjBjMTU2NmMwZTgyZTYyNzMxMjkiLCJpYXQiOjE3NjMzMTUyODUsImV4cCI6MTc2MzMxODg4NX0.wmSbOthciXKVmKbxGFIXrXxr_WeBGSq-dCGU9jkRfXM"
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error(error.message);
+    }
+    const newNotes = notes.filter((note) => {
+      return note._id !== id;
+    });
+    setNotes(newNotes);
+  };
+  const editNote = async (id, title, desc, tag) => {
+    const url = `${HOST}/api/notes/updatenote/${id}`;
+    const data = { title, description: desc, tags: tag };
+    try {
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token":
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmNjBjMTU2NmMwZTgyZTYyNzMxMjkiLCJpYXQiOjE3NjMzMTUyODUsImV4cCI6MTc2MzMxODg4NX0.wmSbOthciXKVmKbxGFIXrXxr_WeBGSq-dCGU9jkRfXM",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error(error.message);
+    }
+
+    for (let index = 0; index < notes.length; index++) {
+      const element = notes[index];
+      if (element._id == id) {
+        element.title = title;
+        element.description = desc;
+        element.tags = tag;
+      }
+    }
+  };
+  return (
+    <noteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes }}>
+      {props.children}
+    </noteContext.Provider>
+  );
+};
 export default NoteState;

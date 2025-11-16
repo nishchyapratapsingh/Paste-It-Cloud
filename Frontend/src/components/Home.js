@@ -9,7 +9,7 @@ export default function Home() {
       <div className="container mt-3">
         <h1></h1>
         <AddNote />
-        <h1>Your Notes</h1>
+        <h1 className="mt-3">Your Notes</h1>
         <div>
           <Notes/>
         </div>
