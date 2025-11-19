@@ -52,16 +52,6 @@ function AddNote() {
           onChange={handleChange}
         />
       </div>
-      {/* <div className="mb-3 form-check">
-        <input
-          type="checkbox"
-          className="form-check-input"
-          id="exampleCheck1"
-        />
-        <label className="form-check-label" htmlFor="exampleCheck1">
-          Check me out
-        </label>
-      </div> */}
       <button type="submit" className="btn btn-primary" onClick={handleSave}>
         Add Note
       </button>

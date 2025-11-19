@@ -2,6 +2,7 @@ import { useState } from "react";
 import noteContext from "./noteContext";
 const notesInitial = [];
 const NoteState = (props) => {
+  const AUTHTKN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmNjBjMTU2NmMwZTgyZTYyNzMxMjkiLCJpYXQiOjE3NjM1MzE1NTAsImV4cCI6MTc2MzUzNTE1MH0.zo0XM2RA5Tjvvsim2p-Z7sD5H7g1FpnauNnbAuGgEuY";
   const HOST = "http://localhost:5000";
   const [notes, setNotes] = useState(notesInitial);
   const getNotes = async () => {
@@ -12,7 +13,7 @@ const NoteState = (props) => {
         headers: {
           "Content-Type": "application/json",
           "auth-token":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmNjBjMTU2NmMwZTgyZTYyNzMxMjkiLCJpYXQiOjE3NjMzMTUyODUsImV4cCI6MTc2MzMxODg4NX0.wmSbOthciXKVmKbxGFIXrXxr_WeBGSq-dCGU9jkRfXM",
+              `${AUTHTKN}`
         },
       });
 
@@ -22,6 +23,7 @@ const NoteState = (props) => {
 
       const result = await response.json();
       console.log(result);
+      setNotes(result);
     } catch (error) {
       console.error(error.message);
     }
@@ -35,7 +37,7 @@ const NoteState = (props) => {
         headers: {
           "Content-Type": "application/json",
           "auth-token":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmNjBjMTU2NmMwZTgyZTYyNzMxMjkiLCJpYXQiOjE3NjMzMTUyODUsImV4cCI6MTc2MzMxODg4NX0.wmSbOthciXKVmKbxGFIXrXxr_WeBGSq-dCGU9jkRfXM",
+`${AUTHTKN}`
         },
         body: JSON.stringify(data),
       });
@@ -46,19 +48,15 @@ const NoteState = (props) => {
 
       const result = await response.json();
       console.log(result);
+      const note = {
+        "title" : title,
+        "description" : desc,
+        "tags" : tag
+      };
+      setNotes(notes.concat(note));
     } catch (error) {
       console.error(error.message);
     }
-    // const note = {
-    //   _id: "68ba928f7a8120023495e5d6f",
-    //   user: "688f60c1566c0e82e6273129",
-    //   title: title,
-    //   description: desc,
-    //   tags: tag,
-    //   date: "2025-09-05T07:34:39.055Z",
-    //   __v: 0,
-    // };
-    // setNotes(notes.concat(note));
   };
   const deleteNote = async(id) => {
     const url = `${HOST}/api/notes/deletenote/${id}`;
@@ -67,7 +65,7 @@ const NoteState = (props) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmNjBjMTU2NmMwZTgyZTYyNzMxMjkiLCJpYXQiOjE3NjMzMTUyODUsImV4cCI6MTc2MzMxODg4NX0.wmSbOthciXKVmKbxGFIXrXxr_WeBGSq-dCGU9jkRfXM"
+          "auth-token": `${AUTHTKN}`
         },
       });
 
@@ -94,7 +92,7 @@ const NoteState = (props) => {
         headers: {
           "Content-Type": "application/json",
           "auth-token":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmNjBjMTU2NmMwZTgyZTYyNzMxMjkiLCJpYXQiOjE3NjMzMTUyODUsImV4cCI6MTc2MzMxODg4NX0.wmSbOthciXKVmKbxGFIXrXxr_WeBGSq-dCGU9jkRfXM",
+`${AUTHTKN}`
         },
         body: JSON.stringify(data),
       });

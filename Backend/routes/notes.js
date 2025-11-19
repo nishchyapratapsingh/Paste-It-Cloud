@@ -7,7 +7,7 @@ const { set } = require("mongoose");
 
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
   const notes = await Notes.find({ user: req.userId });
-  res.json([notes]);
+  res.json(notes);
 });
 
 router.post(
