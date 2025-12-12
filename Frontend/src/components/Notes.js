@@ -1,23 +1,49 @@
-import { useEffect } from "react";
-import React, {useContext} from "react";
+import { useEffect} from "react";
+import React, { useContext } from "react";
 import noteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
-
+import { useState } from "react";
+import EditNote from "./EditNote";
 
 const Notes = () => {
-    const context = useContext(noteContext);
-    const {notes, getNotes} = context;
-    useEffect(() => {
-      getNotes()
-    }, [])
-    
-  return (
-    <div className="row my-3">
-      {notes.map((note)=>{
-        return <NoteItem key={note._id} note={note}/>
-      })}
-    </div>
-  )
-}
+  const context = useContext(noteContext);
+  const { notes, getNotes } = context;
+  useEffect(() => {
+    getNotes();
+    //eslint-disable-next-line
+  }, []);
 
-export default Notes
+  const [currentNote, setCurrentNote] = useState({
+    id: "",
+    etitle: "",
+    edescription: "",
+    etags: "",
+  });
+
+  const updateNote = (note) => {
+    setCurrentNote({
+      id: note._id,
+      etitle: note.title,
+      edescription: note.description,
+      etags: note.tags
+    })
+    window.bootstrap.Modal.getOrCreateInstance(
+      document.getElementById("exampleModal")
+    ).show();
+  };
+
+  return (
+    <>
+      <EditNote currentNote={currentNote} setCurrentNote={setCurrentNote}/>
+      <div className="row my-3">
+        {notes.map((note) => {
+          return (
+            <NoteItem key={note._id} note={note} updateNote={updateNote} />
+          );
+        })}
+      </div>
+    </>
+  );
+};
+
+export default Notes;
