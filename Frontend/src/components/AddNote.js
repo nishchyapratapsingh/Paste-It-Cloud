@@ -3,16 +3,17 @@ import noteContext from "../context/notes/noteContext";
 
 function AddNote() {
   const context = useContext(noteContext);
-  const {addNote} = context;
-  const [note, setNote] = useState({title: "", description: "", tag: ""})
+  const { addNote } = context;
+  const [note, setNote] = useState({ title: "", description: "", tag: "" });
 
-  const handleSave = (e)=> {
+  const handleSave = (e) => {
     e.preventDefault();
     addNote(note.title, note.description, note.tag);
-  }
-  const handleChange = (e)=> {
-    setNote({...note, [e.target.name]: e.target.value})
-  }
+    setNote({ title: "", description: "", tag: "" });
+  };
+  const handleChange = (e) => {
+    setNote({ ...note, [e.target.name]: e.target.value });
+  };
   return (
     <form>
       <div className="mb-3">
@@ -20,19 +21,20 @@ function AddNote() {
           Note title
         </label>
         <input
+          value={note.title}
           type="text"
           className="form-control"
           id="noteTitleForm"
           name="title"
           onChange={handleChange}
         />
-        
       </div>
       <div className="mb-3">
         <label htmlFor="noteDescForm" className="form-label">
           Description
         </label>
         <input
+          value={note.description}
           type="text"
           className="form-control"
           id="noteDescForm"
@@ -50,9 +52,15 @@ function AddNote() {
           id="noteTagForm"
           name="tag"
           onChange={handleChange}
+          value={note.tag}
         />
       </div>
-      <button type="submit" className="btn btn-primary" onClick={handleSave}>
+      <button
+        disabled={note.title.length < 1 || note.description.length < 1}
+        type="submit"
+        className="btn btn-primary"
+        onClick={handleSave}
+      >
         Add Note
       </button>
     </form>

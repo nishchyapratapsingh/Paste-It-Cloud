@@ -92,6 +92,7 @@ const EditNote = (props) => {
               </button>
 
               <button
+                disabled={currentNote.etitle.length<1 || currentNote.edescription.length<1}
                 type="button"
                 className="btn btn-primary"
                 data-bs-dismiss="modal"

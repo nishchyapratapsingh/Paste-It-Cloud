@@ -36,6 +36,9 @@ const Notes = () => {
     <>
       <EditNote currentNote={currentNote} setCurrentNote={setCurrentNote}/>
       <div className="row my-3">
+        <div className="container fs-5">
+          {notes.length == 0 && 'Your notes will be displayed here'}
+        </div>
         {notes.map((note) => {
           return (
             <NoteItem key={note._id} note={note} updateNote={updateNote} />
