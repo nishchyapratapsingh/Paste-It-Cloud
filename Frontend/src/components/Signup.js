@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  let navigate = useNavigate();
   const [credentials, setCredentials] = useState({ name: "", email: "", password: "" });
 
   const handleChange = (e) => {
@@ -23,7 +25,11 @@ const Signup = () => {
         throw new Error(`Response status: ${response.status}`);
       }
       const result = await response.json();
-      console.log(result);
+      if (result.token) {
+        localStorage.setItem("token", result.token);
+        console.log("success");
+        navigate("/");
+      }
     } catch (error) {
       console.error(error.message);
     }
