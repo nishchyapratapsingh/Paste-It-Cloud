@@ -67,9 +67,10 @@ const NoteState = (props) => {
       });
 
       if (!response.ok) {
+        props.showAlert("Please try again later", "warning");
         throw new Error(`Response status: ${response.status}`);
       }
-
+      props.showAlert("Note deleted", "danger")
       const result = await response.json();
       console.log(result);
     } catch (error) {

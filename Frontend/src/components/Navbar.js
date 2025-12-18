@@ -12,7 +12,7 @@ export default function Navbar() {
     <nav className="navbar bg-dark navbar-expand-lg border-bottom border-body" data-bs-theme="dark">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
-          Navbar
+          Paste It Cloud
         </a>
         <button
           className="navbar-toggler"

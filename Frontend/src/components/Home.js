@@ -2,16 +2,15 @@ import React from "react";
 import AddNote from "./AddNote";
 import Notes from "./Notes";
 
-export default function Home() {
-  
+export default function Home(props) {
   return (
     <div>
       <div className="container mt-3">
         <h1></h1>
-        <AddNote />
+        <AddNote showAlert={props.showAlert} />
         <h1 className="mt-3">Your Notes</h1>
         <div>
-          <Notes/>
+          <Notes showAlert={props.showAlert} />
         </div>
       </div>
     </div>

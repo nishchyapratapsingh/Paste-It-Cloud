@@ -1,13 +1,13 @@
-import React from "react";
-
-const Alert = (props) => {
+export default function Alert(props) {
   return (
-    <div>
-      <div className={`alert alert-${props.type}`} role="alert">
-        {props.message}
+    <>
+      <div style={{ height: "50px" }}>
+        {props.alert && ( //checks if alert is null
+          <div className={`alert alert-${props.alert.type}`} role="alert">
+            {props.alert.message}
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
-};
-
-export default Alert;
+}

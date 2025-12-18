@@ -9,6 +9,7 @@ const EditNote = (props) => {
   const handleSave = (e)=> {
     e.preventDefault();
     editNote(currentNote.id, currentNote.etitle, currentNote.edescription, currentNote.etags);
+    props.showAlert("Note Updated", "success");
   }
   const handleChange = (e)=> {
     setCurrentNote({...currentNote, [e.target.name]: e.target.value})

@@ -6,7 +6,7 @@ import { useState } from "react";
 import EditNote from "./EditNote";
 import { useNavigate } from "react-router-dom";
 
-const Notes = () => {
+const Notes = (props) => {
   const context = useContext(noteContext);
   let navigate = useNavigate();
   const { notes, getNotes } = context;
@@ -40,7 +40,7 @@ const Notes = () => {
 
   return (
     <>
-      <EditNote currentNote={currentNote} setCurrentNote={setCurrentNote}/>
+      <EditNote currentNote={currentNote} setCurrentNote={setCurrentNote} showAlert={props.showAlert}/>
       <div className="row my-3">
         <div className="container fs-5">
           {notes.length == 0 && 'Your notes will be displayed here'}
