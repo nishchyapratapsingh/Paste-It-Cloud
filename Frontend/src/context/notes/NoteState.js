@@ -3,8 +3,8 @@ import noteContext from "./noteContext";
 const notesInitial = [];
 const NoteState = (props) => {
   const AUTHTKN =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmNjBjMTU2NmMwZTgyZTYyNzMxMjkiLCJpYXQiOjE3NjU5NzQzNjUsImV4cCI6MTc2NTk3Nzk2NX0.Wh2_4joZaLYrhkeRAw0l7shnrhPsRGUtHMelmO04LHA";
-  const HOST = "http://192.168.1.34:5000";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhmNjBjMTU2NmMwZTgyZTYyNzMxMjkiLCJpYXQiOjE3NjYwMzA1OTAsImV4cCI6MTc2NjAzNDE5MH0.kbQfkAllw_dpvk5QbogrQ4TXV79_72IgVWNrDTQdOMM";
+  const HOST = "http://192.168.1.33:5000";
   const [notes, setNotes] = useState(notesInitial);
   const getNotes = async () => {
     const url = `${HOST}/api/notes/fetchallnotes`;

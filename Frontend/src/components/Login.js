@@ -27,6 +27,7 @@ const Login = () => {
     } catch (error) {
       console.error(error.message);
     }
+    setCredentials({ email: "", password: ""});
   };
   return (
     <div className="container">
@@ -43,6 +44,7 @@ const Login = () => {
             id="exampleInputEmail1"
             value={credentials.email}
             aria-describedby="emailHelp"
+            required
           />
           <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
@@ -59,6 +61,7 @@ const Login = () => {
             id="exampleInputPassword1"
             value={credentials.password}
             name="password"
+            required
           />
         </div>
         <button type="submit" className="btn btn-primary">
