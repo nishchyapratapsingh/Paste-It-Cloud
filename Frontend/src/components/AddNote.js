@@ -59,7 +59,8 @@ function AddNote(props) {
       <button
         disabled={note.title.length < 1 || note.description.length < 1}
         type="submit"
-        className="btn btn-primary"
+        className="btn"
+        style={{backgroundColor: "#EBD5AB", color:"black"}}
         onClick={handleSave}
       >
         Add Note

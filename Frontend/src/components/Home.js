@@ -6,7 +6,6 @@ export default function Home(props) {
   return (
     <div>
       <div className="container mt-3">
-        <h1></h1>
         <AddNote showAlert={props.showAlert} />
         <h1 className="mt-3">Your Notes</h1>
         <div>

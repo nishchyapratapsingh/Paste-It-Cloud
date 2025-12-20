@@ -39,8 +39,8 @@ export default function Navbar() {
             </li>
           </ul>
           <form className="d-flex">
-            <Link className="btn btn-primary mx-2" style={{display: localStorage.getItem('token')?"none":"block"}} to="/login" role="button">Login</Link>
-            <Link className="btn btn-primary mx-2" style={{display: localStorage.getItem('token')?"none":"block"}} to="/signup" role="button">Sign Up</Link>
+            <Link className="btn mx-2" style={{display: localStorage.getItem('token')?"none":"block", color:"black", backgroundColor: "#EBD5AB"}} to="/login" role="button">Login</Link>
+            <Link className="btn mx-2" style={{display: localStorage.getItem('token')?"none":"block", color:"black", backgroundColor: "#EBD5AB"}} to="/signup" role="button">Sign Up</Link>
             <button type="button" style={{display: localStorage.getItem('token')?"block":"none"}} onClick={handleLogOutClick} className="btn btn-danger">Log Out</button>
           </form>
         </div>

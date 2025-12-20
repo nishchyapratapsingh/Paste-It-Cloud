@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Signup = (props) => {
   let navigate = useNavigate();
-  const [credentials, setCredentials] = useState({ name: "", email: "", password: "" });
+  const [credentials, setCredentials] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -11,8 +15,13 @@ const Signup = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = `http://localhost:5000/api/auth/createuser`;
-    const data = {name: credentials.name, email: credentials.email, password: credentials.password };
+    const HOST = process.env.REACT_APP_HOST;
+    const url = `${HOST}/api/auth/createuser`;
+    const data = {
+      name: credentials.name,
+      email: credentials.email,
+      password: credentials.password,
+    };
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -28,14 +37,14 @@ const Signup = (props) => {
       const result = await response.json();
       if (result.token) {
         localStorage.setItem("token", result.token);
-        props.showAlert("Account created successfully", "success");        
+        props.showAlert("Account created successfully", "success");
         navigate("/");
       }
     } catch (error) {
       console.error(error.message);
       props.showAlert("Please try again later", "warning");
     }
-    setCredentials({name: "", email: "", password: ""});
+    setCredentials({ name: "", email: "", password: "" });
   };
   return (
     <div className="container">
@@ -69,7 +78,7 @@ const Signup = (props) => {
             aria-describedby="emailHelp"
             required
           />
-          <div id="emailHelp" className="form-text">
+          <div id="emailHelp" style={{ color: "white" }} className="form-text">
             We'll never share your email with anyone else.
           </div>
         </div>
@@ -88,9 +97,16 @@ const Signup = (props) => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button
+          type="submit"
+          style={{ backgroundColor: "#EBD5AB", color: "black" }}
+          className="btn"
+        >
           Signup
         </button>
+        <p className="mx-2" style={{ display: "inline" }}>
+          Click <Link to="/login">here</Link> to login
+        </p>
       </form>
     </div>
   );
